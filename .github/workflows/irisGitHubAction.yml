@@ -26,7 +26,7 @@ jobs:
           echo "${{ secrets.IRISScanCreds }}" | cat > iris.settings.json
         
           # Download IRIS OnPrem CLI Scanner for Linux and give it run permissions
-          wget -O iris-scanner https://iris.codeeyesolutions.com/assets/onprem/iris-scanner
+          wget -O iris-scanner https://iris.codeeyesolutions.com/assets/onprem/v2/iris-scanner-cli
           chmod +x iris-scanner
         
           # Run scanner IRIS OnPrem CLI Scanner for Linux
