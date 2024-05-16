@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions and IRIS Platform
+
+name: CodeEye IRIS GitHub Action
+on:
+  push:
+    branches:
+      - main # the name of your main branch
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Install dependencies and run scan
+        run: |
+        
+          # Set env vars to iris.settings.json file
+          echo "${{ secrets.IRISScanCreds }}" | cat > iris.settings.json
+        
+          # Download IRIS OnPrem CLI Scanner for Linux and give it run permissions
+          wget -O iris-scanner https://iris.codeeyesolutions.com/assets/onprem/iris-scanner
+          chmod +x iris-scanner
+        
+          # Run scanner IRIS OnPrem CLI Scanner for Linux
+          # -s flag: indicates the location to perform the scan, in this case it is the same directory
+          # -r flag: indicates the name of the release, in this case it takes the id of the commit that triggered the execution of this pipeline
+          ./iris-scanner -s "${PWD}" -r "${{ github.sha }}"
+        
+          rm iris-scanner
+
+
+
+
+
+        
