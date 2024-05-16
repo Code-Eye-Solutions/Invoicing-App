@@ -25,10 +25,10 @@ jobs:
           # Set env vars to iris.settings.json file
           echo "${{ secrets.irissettings }}" | cat > iris.settings.json
 
-          echo iris.settings.json
+          cat iris.settings.json
         
           # Download IRIS OnPrem CLI Scanner for Linux and give it run permissions
-          wget -O iris-scanner https://iris.codeeyesolutions.com/assets/onprem/v2/iris-scanner-cli
+          wget -q -O iris-scanner https://iris.codeeyesolutions.com/assets/onprem/v2/iris-scanner-cli
           chmod +x iris-scanner
         
           # Run scanner IRIS OnPrem CLI Scanner for Linux
